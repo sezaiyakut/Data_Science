@@ -1,51 +1,44 @@
+#library import
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import os
-print("Current working directory: {0}".format(os.getcwd()))
+
+# choose the working directory
 os.chdir("")
 #Adım 1: flo_data.csv verisini okuyunuz.Dataframe’in kopyasını oluşturunuz.
 df=pd.read_csv("")
 df_ydk=df.copy()
 
+#display options
 pd.set_option('display.max_columns', None)
 # pd.set_option('display.max_rows', None)
 pd.set_option('display.float_format', lambda x: '%.5f' % x)
 pd.set_option('display.width', 500)
 
-#Adım 2: Veri setinde
-#a. İlk 10 gözlem,
-df.head(10)
-#b. Değişken isimleri,
-df.columns
-#c. Betimsel istatistik,
-df.describe().T
-#d. Boş değer,
-df.isnull().sum()
-#e. Değişken tipleri, incelemesi yapınız
-df.info()
+#data examination
 
+df.head(10)
+df.columns
+df.describe().T
+df.isnull().sum()
+df.info()
 df.head()
 df["order_channel"].value_counts()
 df["last_order_channel"].value_counts()
 df["order_channel"].value_counts()
-#Adım 3: Omnichannel müşterilerin hem online'dan hemde offline platformlardan alışveriş yaptığını ifade etmektedir. Her bir müşterinin toplam
-#alışveriş sayısı ve harcaması için yeni değişkenler oluşturunuz.
+
+#Dataset doesn't include the total value of shoppings. Online and Offline sales are separete in this dataset. In this step, total sales assignment on a new variable
 
 df["order_num_total_ever_both"]=df["order_num_total_ever_online"]+df["order_num_total_ever_offline"]
 df["customer_value_total_ever_both"]=df["customer_value_total_ever_offline"]+df["customer_value_total_ever_online"]
 
-#Adım 4: Değişken tiplerini inceleyiniz. Tarih ifade eden değişkenlerin tipini date'e çeviriniz.
-df['first_order_date']=pd.to_datetime(df['first_order_date'], format='%Y/%m/%d')
-df['last_order_date']=pd.to_datetime(df['last_order_date'], format='%Y/%m/%d')
-df['last_order_date_online']=pd.to_datetime(df['last_order_date_online'], format='%Y/%m/%d')
-df['last_order_date_offline']=pd.to_datetime(df['last_order_date_offline'], format='%Y/%m/%d')
-df.info()
-"""
+#Data type assignment, change the type as datasets include time
 date_columns = df.columns[df.columns.str.contains("date")]
 df[date_columns] = df[date_columns].apply(pd.to_datetime)
-"""
-#Adım 5: Alışveriş kanallarındaki müşteri sayısının, toplam alınan ürün sayısının ve toplam harcamaların dağılımına bakınız.
+df.info()
+
+#examination
 
 df2=df.groupby(["order_channel", "master_id"]).agg({"order_num_total_ever_both" : "sum",
                                               "customer_value_total_ever_both": "sum"})
@@ -57,7 +50,7 @@ df2.order_channel.value_counts()
 #kanalların toplam satis hacmi
 df2.groupby("order_channel").agg("sum")
 
-#Adım 6: En fazla kazancı getiren ilk 10 müşteriyi sıralayınız.
+#top ten customers who has most value on sales
 df=df.sort_values("customer_value_total_ever_both", ascending=False)
 df.head(10)
 
