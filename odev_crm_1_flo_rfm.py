@@ -3,8 +3,8 @@ import pandas as pd
 import seaborn as sns
 import os
 print("Current working directory: {0}".format(os.getcwd()))
-os.chdir("D:\yazilim")
-#Adım 1: flo_data_20K.csv verisini okuyunuz.Dataframe’in kopyasını oluşturunuz.
+os.chdir("")
+#Adım 1: flo_data.csv verisini okuyunuz.Dataframe’in kopyasını oluşturunuz.
 df=pd.read_csv("")
 df_ydk=df.copy()
 
