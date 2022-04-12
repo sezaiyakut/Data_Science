@@ -5,7 +5,7 @@ import os
 print("Current working directory: {0}".format(os.getcwd()))
 os.chdir("D:\yazilim")
 #Adım 1: flo_data_20K.csv verisini okuyunuz.Dataframe’in kopyasını oluşturunuz.
-df=pd.read_csv("VBO/CRM_Analitik_3hafta/crm_odev_vbo/FLO_RFM_Analizi/flo_data_20k.csv")
+df=pd.read_csv("")
 df_ydk=df.copy()
 
 pd.set_option('display.max_columns', None)
